@@ -7,8 +7,7 @@
 - AVG and MAX invoice amounts
 - Sales and revenue by country 
 
-The used dataset consists of 12779 rows per the week used as an example (2009-12-01 to 2009-12-07) 
-and has the following columns: Invoice, StockCode, Description, Quantity, Price, Customer ID, Country, InvoiceDate. */
+The used dataset has the following columns: Invoice, StockCode, Description, Quantity, Price, Customer ID, Country, InvoiceDate. */
 
 
 -- Data Cleaning
