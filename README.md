@@ -13,8 +13,10 @@ Each project reflects my commitment to data-driven problem-solving and my abilit
 ## Projects
 
 Weekly Sales Analysis for Online Store
-* Code: [Sales_Week_12_09.sql](https://github.com/MargaritaVA/Data-Analysis/blob/main/Online-Store-Weekly-Sales)
-* Goal:
-* Description:
-* Skills: MySQL Workbench, SQL.
-* Technology:
+* **Code**: [Sales_Week_12_09.sql](https://github.com/MargaritaVA/Data-Analysis/blob/main/Online-Store-Weekly-Sales)
+* **Goal**: Develop reusable code to generate weekly performance reports on sales and revenue for an online store, enabling the identification of trends on a weekly, daily, and hourly basis.
+* **Dataset**: The dataset, sourced from Kaggle, consists of transactions for a UK-based online retailer, spanning from December 1, 2009, to December 9, 2011. The company specializes in selling unique, all-occasion giftware.
+* **Description**: The SQL code developed for this project automates the process of extracting, cleaning, and analyzing data for the selected week. It efficiently pulls the relevant data, stores it in a separate file, and performs a comprehensive analysis of key performance indicators (KPIs).
+* **Skills**: Cleaning: RegEx for filtering, CAST for data type conversion, TRIM and REPLACE for stantartiation. Analysis: 
+* **Technology**: MySQL Workbench, SQL.
+* **Results**: 
