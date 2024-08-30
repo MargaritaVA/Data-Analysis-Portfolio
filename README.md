@@ -5,7 +5,7 @@
 I am passionate about continuous learning and enjoy leveraging data to uncover trends, streamline processes, and develop solutions that address complex business challenges. 
 My journey in data analysis is driven by a strong foundation in customer relations and fintech insurance, where I've honed my skills and expanded my technical expertise.
 
-This portfolio highlights a curated selection of projects that demonstrate my proficiency in **Advanced Excel**, **SQL**, and **Tableau**. 
+This portfolio highlights a curated selection of projects that demonstrate my proficiency in **SQL**. 
 Each project reflects my commitment to data-driven problem-solving and my ability to translate insights into actionable results.
 
 ***
@@ -28,3 +28,9 @@ Each project reflects my commitment to data-driven problem-solving and my abilit
     - Top 10 best-selling products
     - Average and maximum invoice amounts
     - Sales and revenue breakdown by country 
+
+
+### CRM Database Schema Design for Car Insurance Company 
+![image](https://github.com/user-attachments/assets/d212e27a-2f0d-4fe5-a2d7-1290b57908de)
+
+
