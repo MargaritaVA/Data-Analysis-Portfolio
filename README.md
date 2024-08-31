@@ -31,6 +31,8 @@ Each project reflects my commitment to data-driven problem-solving and my abilit
 
 
 ### CRM Database Schema Design for Car Insurance Company 
-![image](https://github.com/user-attachments/assets/d212e27a-2f0d-4fe5-a2d7-1290b57908de)
+![image](https://github.com/user-attachments/assets/6c532247-fd32-4abf-a07e-faf128c1ca16)
+
+
 
 
