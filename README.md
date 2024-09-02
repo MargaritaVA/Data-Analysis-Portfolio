@@ -11,6 +11,11 @@ Each project reflects my commitment to data-driven problem-solving and my abilit
 ***
 
 ## Projects
+* Data Breach 2004 - 2022 Analysis
+* [Weekly Sales Performance Overview for Online Store]()
+* CRM Database Schema Design for Car Insurance Company 
+
+***
 
 ### Weekly Sales Performance Overview for Online Store
 
