@@ -7,7 +7,7 @@
 - AVG and MAX invoice amounts
 - Sales and revenue by country 
 
-The used dataset has the following columns: Invoice, StockCode, Description, Quantity, Price, Customer ID, Country, InvoiceDate. */
+Dataset has columns: Invoice, StockCode, Description, Quantity, Price, Customer ID, Country, InvoiceDate. */
 
 
 -- Data Cleaning
