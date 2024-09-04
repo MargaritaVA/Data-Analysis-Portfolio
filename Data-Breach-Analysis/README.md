@@ -1,4 +1,4 @@
-## 🌍 World's Biggest Data Breaches Analysis 
+## 🌍 World's Biggest Data Breaches 
 
 * **Goal**: To analyze breaches reported from 2008 to 2022 to identify trends and patterns, providing insights into the evolving landscape of data security and breach incidents globally.
 * **Code**: [Breach_Analysis.sql](https://github.com/MargaritaVA/Data-Analysis/blob/main/Data-Breach-Analysis/Code.sql)
@@ -26,7 +26,21 @@
       | Facebook      | Sept 2019     | 419 million   | poor security |
       | Friend Finder Network|Nov 2016| 419 million   | hacked        |
 
+      The most records were stolen from social media accounts, email providers, and government institutions.
+   4. Hacking was identified as the most common method of data theft.
 
+      | Method       | Total Breaches| % of TB | Records Lost |
+      | -------------| ------------- | --------| ------------ |
+      | hacked       | 274           | 65.71   | 9.2 billion  |
+      | poor security| 53            | 12.71   | 4 billion    |
+      | lost device  | 48            | 11.51   | 215 million  |
+      | human error  | 22            | 5.28    | 436 million  |
+      | inside job   | 20            | 4.80    | 360 million  |
+   5. An analysis of the impact of data sensitivity revealed that most successful breaches involved stolen passwords, email addresses, and personal details. This indicates that mostly data at the 1st and 2nd levels of sensitivity was compromised, with the 5th level being the highest in sensitivity.
+   6. The correlation between data sensitivity and breach methods revealed that hacking was the most common method across all levels of data sensitivity. However, the subsequent methods varied depending on the sensitivity scale. Data at the 1st and 2nd levels of sensitivity, including emails, online information, and passwords, was often compromised due to poor security and human error. Data at the 3rd and 4th levels, such as credit card information, health records, and personal data, was frequently breached due to lost devices and inadequate security measures. For highly sensitive data at the 5th level, "inside jobs" emerged as the second most common method of breach after hacking.
+   7. Out of 70 organisations that reported the number of breached records, 7 reported a lower number than the actual figure, 7 reported a higher number, and 56 disclosed the accurate number to the public.
+   8. 
+      
 
 
 
