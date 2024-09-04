@@ -1,6 +1,9 @@
+-- The dataset consists of 12 columns: organisation, alternative_name, records_lost, year, date, story, sector, method, data_sensitivity, displayed_records, source_name, and ID.
+
+
 -- Data Cleaning
 
--- Created a copy of the table with duplicates 
+-- Created a copy of the table with duplicates.
 CREATE TABLE breach_staging
 LIKE breaches;
 
@@ -8,27 +11,26 @@ INSERT breach_staging
 SELECT * 
 FROM breaches;
 
--- year and data standartisation, combining into one column, row have different format (some days are in the format of Aug-22 and some in Aug 2022
--- sector refining (taking only primary sector)
--- removing unnecessary columns (alternative name, story, displayed records -not enogh data, source_name)
+-- Observation: The days in the `date` column have different formats.
+-- Checked and standardised the formats, and created a new column.
 
 SELECT date
 FROM breach_staging
-WHERE date REGEXP '^[A-Za-z]{3}-[0-9]{2}$'; -- days in the format of Aug-22
+WHERE date REGEXP '^[A-Za-z]{3}-[0-9]{2}$'; -- days in the format of `Aug-22`
 
 SELECT date
 FROM breach_staging
-WHERE date NOT REGEXP '^[A-Za-z]{3}-[0-9]{2}$'; -- days in the format of Aug 2022
+WHERE date NOT REGEXP '^[A-Za-z]{3}-[0-9]{2}$'; -- days in the format of `Aug 2022`
 
 UPDATE breach_staging
 SET date = CONCAT(SUBSTRING(date, 1, 3), ' 20', SUBSTRING(date, 5, 2))
-WHERE date REGEXP '^[A-Za-z]{3}-[0-9]{2}$'; -- standardizing format - 45 rows updated to Aug 2022
+WHERE date REGEXP '^[A-Za-z]{3}-[0-9]{2}$'; -- standardised format - 45 rows updated to `Aug 2022`
 
 ALTER TABLE breach_staging
 ADD COLUMN month_year DATE;
 
 UPDATE breach_staging
-SET month_year = STR_TO_DATE(CONCAT('01 ', date), '%d %b %Y'); -- insering the values into the new column in the right format
+SET month_year = STR_TO_DATE(CONCAT('01 ', date), '%d %b %Y'); -- inserted values into the new column in the right format
 
 SELECT date, month_year
 FROM breach_staging;
@@ -39,15 +41,17 @@ DROP COLUMN date;
 ALTER TABLE breach_staging
 RENAME COLUMN month_year TO date;
 
--- refining the 'sector' column, some rows have 2 values divided by comma
+-- Observation: The `sector` column contains multiple values in some rows.
 
-select distinct sector
-from breach_staging;
+SELECT DISTINCT sector
+FROM breach_staging;
+
+-- Updated the column to show only the primary sector.
 
 UPDATE breach_staging
 SET sector = SUBSTRING_INDEX(sector, ',', 1); -- from 27 to 16 rows
 
--- changing records_lost from varchar to bigint
+-- Changed `records_lost` from varchar to bigint to enable calculations.
 ALTER TABLE breach_staging
 ADD COLUMN records_lost_clean BIGINT;
 
@@ -60,7 +64,7 @@ DROP COLUMN records_lost;
 ALTER TABLE breach_staging
 CHANGE COLUMN records_lost_clean records_lost BIGINT;
 
--- updated the displayed_records column
+-- Updated some values in the `displayed_records` column from text to numbers.
 
 SELECT * FROM breach_staging
 WHERE displayed_records NOT REGEXP '[0-9]';
@@ -72,9 +76,12 @@ SET displayed_records = CASE
     ELSE displayed_records
 END;
 
--- removing commas to change datatype from varchar to bigint
+-- Created a new column with the correct data type (bigint).
+
 ALTER TABLE breach_staging
 ADD COLUMN displayed_records_clean BIGINT;
+
+-- Copied the records from the original `displayed_records` column.
 
 UPDATE breach_staging
 SET displayed_records_clean = CAST(REPLACE(displayed_records, ',', '') AS UNSIGNED);
@@ -85,7 +92,7 @@ DROP COLUMN displayed_records;
 ALTER TABLE breach_staging
 CHANGE COLUMN displayed_records_clean displayed_records BIGINT;
 
--- removing unnecessary columns
+-- Removed unnecessary columns.
 
 ALTER TABLE breach_staging
 DROP COLUMN year;
@@ -101,12 +108,9 @@ DROP COLUMN alternative_name;
 
 
 
-
-
 -- Data Analysis
--- sector by breaches, by records lost 
 
--- 1. Main query to calculate total breaches, total records lost, and their percentages
+-- 1. Calculated the total number of breaches, total records lost, and their percentages.
 SELECT
     sector,
     total_breaches,
@@ -114,7 +118,6 @@ SELECT
     total_records_lost,
     ROUND((total_records_lost * 100.0 / totals.total_records_lost_all),2) AS `%_records_lost`
 FROM (
-    -- Subquery to calculate total breaches and records lost per sector
     SELECT
         sector,
         COUNT(id) AS total_breaches,
@@ -123,21 +126,15 @@ FROM (
     GROUP BY sector
 ) AS subquery 
 JOIN (
-    -- Subquery to calculate the overall totals across all sectors and methods
     SELECT
         COUNT(id) AS total_breaches_all,
         SUM(records_lost) AS total_records_lost_all
     FROM breach_staging
 ) AS totals
 ORDER BY total_breaches DESC;
-/*the most records 7059235665 were lost in the web sector 114 breaches
-tech 1593738818 in 28 breached
-finance 1162050100 in 39 breaches*/
 
+-- 2. Analysed trends over time.
 
-
--- 2. trends over time
--- data from 01/06/2004 to 01/08/2022
 SELECT 
 	date, 
 	COUNT(id) AS total_breaches, 
@@ -148,7 +145,8 @@ FROM breach_staging
 GROUP BY 1
 ORDER BY 1;
 
--- 3. top 10 
+-- 3. Identified the top 10 companies with the most records lost.
+
 SELECT 
     organisation,
     date,
@@ -161,8 +159,8 @@ FROM
 ORDER BY records_lost DESC
 LIMIT 10;
 
+-- 4. Determined the percentage of total breaches by method. 
 
--- 4. methods of breach 
 WITH total_breaches AS (
     SELECT 
         COUNT(id) AS total_breaches_all
@@ -181,9 +179,9 @@ GROUP BY
     method, tb.total_breaches_all
 ORDER BY 
     total_breaches DESC;
--- top value is hached lost the most records 9273769852 and most breached 274
 
--- 5. impact of data sensitivity
+-- 5. Assessed the impact of data sensitivity on the number of records lost.
+
 SELECT 
     data_sensitivity,
     COUNT(id) AS total_breaches,
@@ -192,9 +190,9 @@ FROM
     breach_staging
 GROUP BY data_sensitivity
 ORDER BY total_breaches DESC;
--- most records lost in the 1 and 2 degree of sensitivity. the higher the sensitivity, less records lost
 
--- 6. correlation between data sensitivity and method 
+-- 6. Examined the correlation between data sensitivity and breach method.
+
 SELECT 
     data_sensitivity,
     method,
@@ -205,13 +203,9 @@ FROM
 WHERE data_sensitivity is not null
 GROUP BY data_sensitivity , method
 ORDER BY data_sensitivity, total_breaches DESC;
--- 1st degree: hacking, poor security, hum er
--- 2nd degree: hacking, poor security, lost device
--- 3rd degree: hacking, lost device, poor security
--- 4th degree: hacking, lost device, poor security
--- 5th degree: hacking, inside job, poor security
 
--- 7. displayed vs actual records
+-- 7. Analysed the count of displayed versus actual records lost.
+
 SELECT 
     organisation,
     date,
@@ -224,8 +218,7 @@ WHERE
     displayed_records IS NOT NULL
 ORDER BY discrepancy DESC;
 
--- outliers in terms of records lost compared to others in the same sector or year.
--- 8. top 3 organisations per sector
+-- 8. Identified outliers in terms of records lost compared to others in the same sector or year (top 3 organisations per sector).
 
 WITH ranked_organisations AS (
     SELECT 
