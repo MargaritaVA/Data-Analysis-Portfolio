@@ -8,6 +8,7 @@
 * **Skills**: Relational database design, SQL schema creation, data types, indexing, data insertion, join operations.
 * **Technology**: draw.io, MySQL Workbench, SQL.
 * **Results**: [CRM Schema in SQL](https://github.com/MargaritaVA/Data-Analysis/blob/main/crm-schema.sql)
+* **Visual Representation**:
 
   
 ![image](https://github.com/user-attachments/assets/6c532247-fd32-4abf-a07e-faf128c1ca16)
