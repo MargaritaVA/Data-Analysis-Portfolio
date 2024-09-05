@@ -1,6 +1,6 @@
 -- CRM Database Schema Design
 
-/*Datebase consists of six tables:
+/*Database consists of six tables:
 - customers 
 - addresses
 - vehicles
