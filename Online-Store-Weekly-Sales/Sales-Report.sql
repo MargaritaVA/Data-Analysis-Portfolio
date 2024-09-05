@@ -12,7 +12,7 @@ Dataset has columns: Invoice, StockCode, Description, Quantity, Price, Customer 
 
 -- Data Cleaning
 
-/* Creating a staging db (copy) to to keep raw data separate. */
+-- Created a staging db (copy) to to keep raw data separate.
 
   CREATE TABLE retail_staging LIKE online_retail_ii;
 
@@ -20,7 +20,7 @@ Dataset has columns: Invoice, StockCode, Description, Quantity, Price, Customer 
   SELECT * 
   FROM online_retail_ii;
 
-/* Converting InvoiceDate data type from String to DATETIME for use in time-based analysis. */
+-- Converted InvoiceDate data type from String to DATETIME for use in time-based analysis.
 
   ALTER TABLE retail_staging
   ADD COLUMN InvoiceDateTime DATETIME;
@@ -32,31 +32,31 @@ Dataset has columns: Invoice, StockCode, Description, Quantity, Price, Customer 
   ALTER TABLE retail_staging
   DROP COLUMN InvoiceDate;
 
-/* Removing data outside of the required data range (2009-12-01 to 2009-12-07) */
+-- Removed data outside of the required data range (2009-12-01 to 2009-12-07).
 
   DELETE FROM retail_staging 
   WHERE
     InvoiceDateTime NOT BETWEEN '2009-12-01' AND '2009-12-07';
 
-/* Removing non-products using regular expression on the stock code. 
+-- Removed non-products using regular expression on the stock code. 
 
   Product codes contain 5 numbers or 5 numbers and 1 symbol. */
   DELETE FROM retail_staging 
   WHERE
     StockCode NOT REGEXP '^[0-9]{5}([a-zA-Z])?$';
 
-/* Standarlized the description column by removing white spaces. */
+-- Standardised the description column by removing white spaces. 
 
   UPDATE retail_staging 
   SET 
     Description = TRIM(Description);
 
-/* Renamed Customer ID column for consistancy */
+-- Renamed Customer ID column for consistancy.
 
   ALTER TABLE retail_staging
   CHANGE `Customer ID` CustomerID INT NOT NULL;
 
-/* Replaced '&' to avoid export issues. */
+-- Replaced '&' to avoid export issues. 
 
   UPDATE retail_staging 
   SET 
@@ -65,7 +65,7 @@ Dataset has columns: Invoice, StockCode, Description, Quantity, Price, Customer 
 
 -- Data Analysis 
 
-/* Revenue by day and rolling total */
+-- Revenue by day and rolling total.
 
   WITH rolling_total AS (
   SELECT DATE(InvoiceDateTime) as `date`, SUM(Price * Quantity) AS revenue
@@ -76,7 +76,7 @@ Dataset has columns: Invoice, StockCode, Description, Quantity, Price, Customer 
   SELECT `date`, ROUND(revenue) AS daily_revenue, ROUND(SUM(revenue) OVER (ORDER BY `date`)) AS total_revenue
   FROM rolling_total;
 
-/* Peak sales hours by day */
+-- Peak sales hours by day.
 
   SELECT 
     t.sale_date, t.sale_hour, ROUND(t.revenue_by_hour) as max_revenue, t.items_sold
@@ -104,7 +104,7 @@ Dataset has columns: Invoice, StockCode, Description, Quantity, Price, Customer 
         AND t.revenue_by_hour = m.max_sales
   ORDER BY t.sale_date;
 
-/* Top 10 selling products */
+-- Top 10 selling products.
 
   SELECT 
     StockCode,
@@ -117,7 +117,7 @@ Dataset has columns: Invoice, StockCode, Description, Quantity, Price, Customer 
   ORDER BY Total_Quantity_Sold DESC, Total_Product_Revenue DESC
   LIMIT 10;
 
-/* AVG and MAX invoice amounts */
+-- AVG and MAX invoice amounts.
 
   SELECT 
     ROUND(AVG(invoice_total)) AS avg_invoice_amount,
@@ -129,7 +129,7 @@ Dataset has columns: Invoice, StockCode, Description, Quantity, Price, Customer 
         retail_staging
     GROUP BY Invoice) AS invoice_total;
 
-/* Sales and revenue by country */
+-- Sales and revenue by country.
 
   SELECT 
     Country,
