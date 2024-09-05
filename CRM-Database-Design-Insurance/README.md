@@ -7,7 +7,7 @@
      - Tested the code by running queries to ensure data integrity and validate relationships.
 * **Skills**: Relational database design, SQL schema creation, data types, indexing, data insertion, join operations.
 * **Technology**: draw.io, MySQL Workbench, SQL.
-* **Results**: [CRM Schema in SQL](https://github.com/MargaritaVA/Data-Analysis/blob/main/crm-schema.sql)
+* **Results**: [CRM Schema in SQL](https://github.com/MargaritaVA/Data-Analysis/blob/main/CRM-Database-Design-Insurance/crm-schema.sql)
 * **Visual Representation**:
 
   
