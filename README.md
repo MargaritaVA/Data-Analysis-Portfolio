@@ -18,7 +18,7 @@ In this portfolio, I’ve showcased a selection of personal projects that highli
   
 * [CRM Database Schema Design for a Car Insurance Company](https://github.com/MargaritaVA/Data-Analysis/tree/main/CRM-Database-Design-Insurance)
 
-  *About*: This project demonstrates a simplified version of a relational database schema for motor insurance company.
+  *About*: This project demonstrates a simplified version of a relational database schema for a motor insurance company.
 
 ***
 
